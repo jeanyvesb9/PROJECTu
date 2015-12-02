@@ -1,6 +1,6 @@
-#include "src/database/playlist.h"
+#include "src/database/library/playlist.h"
 
-using namespace Database;
+using namespace DB;
 
 Playlist::Playlist(QObject *parent)
     :QObject(parent)

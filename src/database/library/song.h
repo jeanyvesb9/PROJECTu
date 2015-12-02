@@ -7,7 +7,7 @@
 #include <QtGlobal>
 #include "src/global.h"
 
-namespace Database
+namespace DB
 {
 
 class Song : public QObject

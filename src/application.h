@@ -1,17 +1,25 @@
-#ifndef APPLLICATION_H
-#define APPLLICATION_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include <QObject>
+#include "src/database/database.h"
 
-class Appllication : public QObject
+class Application : public QObject
 {
     Q_OBJECT
 public:
-    explicit Appllication(QObject *parent = 0);
+    explicit Application(QObject *parent = 0);
+
+private:
+    Database db;
 
 signals:
 
 public slots:
+
+private slots:
+
+
 };
 
-#endif // APPLLICATION_H
+#endif // APPLICATION_H

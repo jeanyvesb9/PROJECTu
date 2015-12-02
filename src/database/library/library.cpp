@@ -1,6 +1,6 @@
-#include "src/database/library.h"
+#include "src/database/library/library.h"
 
-using namespace Database;
+using namespace DB;
 
 Library::Library(QObject *parent)
     : QObject(parent), state{State::Ordered}, songsOrdered{1}, albumsOrdered{1},

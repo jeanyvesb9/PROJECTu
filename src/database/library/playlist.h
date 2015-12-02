@@ -6,9 +6,9 @@
 #include <QByteArray>
 #include <QtGlobal>
 #include <QList>
-#include "song.h"
+#include "src/database/library/song.h"
 
-namespace Database
+namespace DB
 {
 
 class Playlist : public QObject

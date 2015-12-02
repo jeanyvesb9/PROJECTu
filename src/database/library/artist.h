@@ -6,7 +6,7 @@
 #include <QByteArray>
 #include <QtGlobal>
 
-namespace Database
+namespace DB
 {
 
 class Artist : public QObject

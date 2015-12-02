@@ -55,7 +55,7 @@ void FileManager::setCheckDB(bool value)
     mutex.unlock();
 }
 
-void FileManager::setLibrary(QSharedPointer<Database::Library> lib)
+void FileManager::setLibrary(QSharedPointer<DB::Library> lib)
 {
     mutex.lock();
     library = lib;
@@ -74,16 +74,16 @@ bool FileManager::parseDir(QString url)
 
     //DO GENRES
     QList<SongExtraMetadata> metaList;
-    QList<QSharedPointer<Database::Song>> songList;
+    QList<QSharedPointer<DB::Song>> songList;
 
 
     for(QFileInfo file : fileList)
     {
         SongExtraMetadata meta;
-        QSharedPointer<Database::Song>song = parseFile(file.absoluteFilePath(), &meta);
+        QSharedPointer<DB::Song>song = parseFile(file.absoluteFilePath(), &meta);
         if(!song.isNull())
         {
-            Database::Item_ID id = Database::Item_ID::fromHash(song->getFile());
+            DB::Item_ID id = DB::Item_ID::fromHash(song->getFile());
             song->setId(id.to64bitID());
             metaList.append(meta);
             songList.append(song);
@@ -99,14 +99,16 @@ bool FileManager::parseDir(QString url)
         }
     }
     return true;
+
+
 }
 
-QSharedPointer<Database::Song> FileManager::parseFile(QString url, SongExtraMetadata *meta)
+QSharedPointer<DB::Song> FileManager::parseFile(QString url, SongExtraMetadata *meta)
 {
     QFileInfo fileInfo(url);
     if(!fileInfo.isReadable())
     {
-        return QSharedPointer<Database::Song>(nullptr);
+        return QSharedPointer<DB::Song>(nullptr);
     }
 
     if(fileInfo.suffix() == "m4a")
@@ -114,10 +116,10 @@ QSharedPointer<Database::Song> FileManager::parseFile(QString url, SongExtraMeta
         TagLib::MP4::File file(url.toStdWString().data());
         if(!file.isValid())
         {
-            return QSharedPointer<Database::Song>(nullptr);
+            return QSharedPointer<DB::Song>(nullptr);
         }
 
-        QSharedPointer<Database::Song> song(new Database::Song());
+        QSharedPointer<DB::Song> song(new DB::Song());
         TagLib::MP4::Tag *tag = file.tag();
         song->setName(QString::fromWCharArray(tag->title().toCWString()).toUtf8());
         song->setTrackNumber(tag->track());
@@ -165,10 +167,10 @@ QSharedPointer<Database::Song> FileManager::parseFile(QString url, SongExtraMeta
         TagLib::MPEG::File file(url.toStdWString().data());
         if(!file.isValid())
         {
-            return QSharedPointer<Database::Song>(nullptr);
+            return QSharedPointer<DB::Song>(nullptr);
         }
 
-        QSharedPointer<Database::Song> song(new Database::Song());
+        QSharedPointer<DB::Song> song(new DB::Song());
         TagLib::ID3v2::Tag *tag = file.ID3v2Tag(true);
         song->setName(QString::fromWCharArray(tag->title().toCWString()).toUtf8());
         song->setTrackNumber(tag->track());
@@ -196,30 +198,12 @@ QSharedPointer<Database::Song> FileManager::parseFile(QString url, SongExtraMeta
             meta->albumArtist.append("");
         }
 
-        if(!tag->frameList("TPOS").isEmpty()) //Disc Number
-        {
-            TagLib::ID3v2::FrameList discNumber = tag->frameList("TPOS");
-            if(discNumber.front()->size() != 0)
-            {
-                int cd = discNumber.front()->toString().split('/')[0].toInt();
-                if(cd < 1)
-                    cd = 1;
-                song->setDiscNumber(cd);
-            }
-            else
-            {
-                song->setDiscNumber(1);
-            }
-        }
-        else
-        {
-            song->setDiscNumber(1);
-        }
+
 
         return song;
     }
 
-    return QSharedPointer<Database::Song>(nullptr);
+    return QSharedPointer<DB::Song>(nullptr);
 }
 
 void FileManager::private_startSearch()

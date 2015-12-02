@@ -1,6 +1,6 @@
-#include "src/database/album.h"
+#include "src/database/library/album.h"
 
-using namespace Database;
+using namespace DB;
 
 Album::Album(QObject *parent)
     :QObject(parent)

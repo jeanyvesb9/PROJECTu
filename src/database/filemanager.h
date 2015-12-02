@@ -12,13 +12,15 @@
 #include <QMutexLocker>
 #include <QPointer>
 #include <QSharedPointer>
-#include <cstring>
-#include <taglib/fileref.h>
-#include <taglib/tag.h>
-#include <taglib/mp4file.h>
-#include <taglib/id3v2tag.h>
-#include <taglib/mpegfile.h>
-#include "src/database/library.h"
+#include <QSqlDatabase>
+//#include <cstring>
+//#include <taglib/fileref.h>
+//#include <taglib/tag.h>
+//#include <taglib/mp4file.h>
+//#include <taglib/id3v2tag.h>
+//#include <taglib/mpegfile.h>
+#include "src/database/library/library.h"
+#include "src/database/songfile.h"
 
 namespace BackEnd {
 
@@ -48,10 +50,10 @@ private:
     bool recursive;
     bool checkDB;
 
-    bool parseDir(QString url);
-    QSharedPointer<Database::Song> parseFile(QString url, SongExtraMetadata *meta);
+    QSqlDatabase db;
 
-    QSharedPointer<Database::Library> library;
+    bool parseDir(QString url);
+    QSharedPointer<DB::Song> parseFile(QString url, SongExtraMetadata *meta);
 
 signals:
     void private_finished();
@@ -61,7 +63,7 @@ public slots:
     void setFileFormats(const QStringList &value);
     void setRecursive(bool value);
     void setCheckDB(bool value);
-    void setLibrary(QSharedPointer<Database::Library> lib);
+    void setDB(QString url);
 
     void private_startSearch();
 };

@@ -1,6 +1,6 @@
 #include "artist.h"
 
-using namespace Database;
+using namespace DB;
 
 Artist::Artist(QObject *parent)
     :QObject(parent)

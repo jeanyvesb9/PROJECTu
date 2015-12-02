@@ -1,7 +1,6 @@
-#include "appllication.h"
+#include "application.h"
 
-Appllication::Appllication(QObject *parent) : QObject(parent)
+Application::Application(QObject *parent) : QObject(parent)
 {
 
 }
-

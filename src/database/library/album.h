@@ -10,7 +10,7 @@
 #include <QMap>
 #include <QImage>
 
-namespace Database
+namespace DB
 {
 
 class Album : public QObject

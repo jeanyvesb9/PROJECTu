@@ -1,6 +1,6 @@
-#include "src/database/song.h"
+#include "src/database/library/song.h"
 
-using namespace Database;
+using namespace DB;
 
 Song::Song(QObject *parent)
     :QObject(parent)
